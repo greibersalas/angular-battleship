@@ -1,0 +1,22 @@
+.box {
+    width: 50px;
+    border: 1px solid #444;
+    color: #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 100%;
+
+  }
+
+  .box:nth-child(even) {
+    background-color: #ccc;
+    color: #000;
+  }
+
+  .wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: 50px 50px 50px;
+    grid-auto-flow: row;
+  }
