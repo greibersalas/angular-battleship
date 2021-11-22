@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 //Models
-import { PositionModel, ShipModel, ShipsModel } from './models/ship.model';
+import { PositionModel, ShipModel, ShipsModel } from '../../models/ship.model';
 //Services
-import { ShipService } from './services/ship.service';
+import { ShipService } from '../../services/ship.service';
+
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'angular-battleship';
+export class GameComponent implements OnInit {
+
   message: string = '';
   shifts: number = 10;
   table: any[] = [];
