@@ -23,4 +23,8 @@ export class ShipService {
     }
     return ship;
   }
+
+  getNickName(): string {
+    return localStorage.getItem('nickname');
+  }
 }

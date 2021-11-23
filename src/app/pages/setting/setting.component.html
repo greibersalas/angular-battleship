@@ -1,2 +1,50 @@
 <app-nav-bar></app-nav-bar>
-<p>setting works!</p>
+<div class="container">
+    <div class="card mt-2 mb-4">
+        <div class="card-header">
+            Game Settings
+          </div>
+        <div class="card-body">
+            <form action="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nick Name</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nick Name">
+                          </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-2 mt-2">
+                            <label for="">Shifts</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Easy <small>(Infinite shifts)</small>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                Midium <small>(100 shifts)</small>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+                                <label class="form-check-label" for="exampleRadios3">
+                                Hard <small>(50 shifts)</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <a href="#" class="btn btn-primary">Update Settings</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+</div>
+
+<app-footer></app-footer>

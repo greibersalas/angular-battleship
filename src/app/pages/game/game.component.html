@@ -1,5 +1,42 @@
 <app-nav-bar></app-nav-bar>
-<div class="main">
+<div class="container" *ngIf="this.gameState === 0">
+  <div class="card mt-2 mb-4">
+    <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-2 mt-2">
+                    <label for="">Hi <b>{{this.nickName}}</b> Please select Shifts</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="easy" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="exampleRadios1">
+                            Easy <small>(Infinite shifts)</small>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="midium" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="exampleRadios2">
+                        Midium <small>(100 shifts)</small>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="hard" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="exampleRadios3">
+                        Hard <small>(50 shifts)</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+              <hr>
+              <a href="javascript:" class="btn btn-primary" (click)="this.startGame()">Start Game</a>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+<div class="main" *ngIf="this.gameState === 1">
     <div class="alert alert-success mt-2" role="alert" *ngIf="this.shifts === 0">
       game is <a href="javascript:" class="alert-link">finish!!!</a>
     </div>
@@ -23,13 +60,15 @@
     <div class="panel">
       <div class="topPanel">
         <div class="layout">
-          <h6 class="text-black">Available Shifts: {{this.shifts}}</h6>
+          <h6 class="text-black" *ngIf="this.shifts > 0">Available Shifts: {{this.shifts-this.shiftsUsed}}</h6>
+          <h6 class="text-black" *ngIf="this.shifts < 0">Available Shifts: infinite</h6>
           <div class="alert alert-primary" role="alert" *ngIf="this.message != '' && this.shifts > 0">
             {{this.message}}
           </div>
           <div class="alert alert-warning" role="alert" *ngIf="this.shifts === 0">
             No more available shifts
           </div>
+          <button class="btn btn-sm btn-outline-secondary btn-block" (click)="this.restartGame()"> Restart Game</button>
         </div>
         </div>
     </div>

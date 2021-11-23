@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+//import * as _ from 'lodash';
 
 //Models
-import { PositionModel, ShipModel, ShipsModel } from './models/ship.model';
+//import { PositionModel, ShipModel, ShipsModel } from './models/ship.model';
 //Services
-import { ShipService } from './services/ship.service';
+//import { ShipService } from './services/ship.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +12,7 @@ import { ShipService } from './services/ship.service';
 })
 export class AppComponent implements OnInit {
   title = 'angular-battleship';
-  message: string = '';
+  /*message: string = '';
   shifts: number = 10;
   table: any[] = [];
   tops: any[] = [];
@@ -34,16 +34,16 @@ export class AppComponent implements OnInit {
     {id: 8, ship: this.ship[3], positions: []},
     {id: 9, ship: this.ship[3], positions: []},
     {id: 10, ship: this.ship[3], positions: []},
-  ];
+  ];*/
   constructor(
-    private sihpService: ShipService
+    //private sihpService: ShipService
   ) { }
 
   ngOnInit(): void {
-    this.setPositions();
+    //this.setPositions();
   }
 
-  setTable(): void{
+  /*setTable(): void{
     for (let i = 1; i <= 100; i++) {
       if( i < 11) {
         this.tops.unshift({
@@ -86,9 +86,9 @@ export class AppComponent implements OnInit {
         });
       }
     }
-  }
+  }*/
 
-  getId(id: number): void{
+  /*getId(id: number): void{
     if(this.shifts === 0) return;
     this.shifts--;
     console.log(this.table);
@@ -104,9 +104,9 @@ export class AppComponent implements OnInit {
       find.miss = true;
       this.message = 'You missed!';
     }
-  }
+  }*/
 
-  checkHit(id: number): number{
+  /*checkHit(id: number): number{
     let hit: number = 0;
     this.ships.map( el => {
       const post = _.filter(el.positions, (o: PositionModel) => { return o.id === id});
@@ -116,22 +116,22 @@ export class AppComponent implements OnInit {
       }
     });
     return hit;
-  }
+  }*/
 
-  checkPosition(i: number) : number{
+  /*checkPosition(i: number) : number{
     let check = {ship: 0};
     const post = this.getPosition(i);
     if(post.length > 0){
       return post[0].ship.id;
     }
     return 0;
-  }
+  }*/
   /**
    * Función para buscar una posición
    * @param i
    * @returns
    */
-  getPosition(item: number): any{
+  /*getPosition(item: number): any{
     //console.log({item});
     let find = [];
     this.ships.map( el => {
@@ -141,32 +141,21 @@ export class AppComponent implements OnInit {
         return;
       }
     });
-    if(find.length > 0){
-      //console.log({item},{find});
-      
-    }
     return find;
-  }
+  }*/
 
   /**
    * Funcion para crear la estructura de los barcos
    */
-  setPositions(): void{
+  /*setPositions(): void{
     //this.setRandon(this.ships[0]);
     this.ships.forEach( (el) => {
-      this.setRandon(el);
-      /*el.positions.forEach( (pos: any) => {
-        const find = this.table.find( i => {return i.id === pos});
-        find.used = true;
-      });*/
     });
     this.setTable();
-  }
+  }*/
 
-  async setRandon(ship: ShipsModel): Promise<void>{
+  /*async setRandon(ship: ShipsModel): Promise<void>{
     const origin = Math.floor((Math.random() * 10) + 1);
-    console.log({origin});
-    
     const length = ship.ship.size;
     if( origin < 6 ) {
       const offset = 11 - length;
@@ -183,9 +172,9 @@ export class AppComponent implements OnInit {
         ship.positions = await this.sihpService.setPopulateVertical(rand, ship.ship.size);
       }
     }
-  }
+  }*/
 
-  checkOverlap(rand: number, orientation: string, length: number, ship: ShipsModel): boolean{
+  /*checkOverlap(rand: number, orientation: string, length: number, ship: ShipsModel): boolean{
     let start = rand;
     if ( orientation === 'H') {
       const end = rand + length;
@@ -209,6 +198,6 @@ export class AppComponent implements OnInit {
       }
     }
     return false
-  }
+  }*/
 
 }

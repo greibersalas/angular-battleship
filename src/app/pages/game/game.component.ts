@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import Swal from'sweetalert2';
 
+// Data
+import { ShipDB } from '../../db/ship-data';
 //Models
 import { PositionModel, ShipModel, ShipsModel } from '../../models/ship.model';
 //Services
 import { ShipService } from '../../services/ship.service';
+import { TopsModel } from '../../models/tops.model';
+import { TableModel } from '../../models/table.model';
 
 @Component({
   selector: 'app-game',
@@ -13,17 +18,17 @@ import { ShipService } from '../../services/ship.service';
 })
 export class GameComponent implements OnInit {
 
+  gameState: number = 0;
+  error: boolean = false;
   message: string = '';
-  shifts: number = 10;
-  table: any[] = [];
-  tops: any[] = [];
+  nickName: string = '';
+  shiftState: string = '';
+  shifts: number = 0;
+  shiftsUsed: number = 0;
+  table: TableModel[] = [];
+  tops: TopsModel[] = [];
   lefts: any[] = [];
-  ship: ShipModel[] = [
-    {id: 1, name: 'Carrier', size: 4},
-    {id: 2, name: 'Cruiser', size: 3},
-    {id: 3, name: 'Destroyer', size: 2},
-    {id: 4, name: 'Frigate', size: 1}
-  ];
+  ship: ShipModel[] = ShipDB.ship;
   ships: ShipsModel[] = [
     {id: 1, ship: this.ship[0], positions: []},
     {id: 2, ship: this.ship[1], positions: []},
@@ -41,9 +46,65 @@ export class GameComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getNickName();
+    //this.setPositions();
+  }
+
+  getNickName(): void{
+    this.nickName = this.sihpService.getNickName();
+    if(this.nickName === null){
+      this.nickName = `Guest${Math.floor(Math.random() * 10)}`;
+      localStorage.setItem('nickName', this.nickName);
+    }
+  }
+
+  /**
+   * funtion to start the game
+   */
+  startGame(): void{
+    if(this.shiftState === ''){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention',
+        text: 'You must select a shifts!',
+      })
+      return;
+    }
+    if(this.shiftState === 'midium'){
+      this.shifts = 100;
+    }else if(this.shiftState === 'hard'){
+      this.shifts = 50;
+    }else{
+      this.shifts = -1;
+    }
+    this.gameState = 1;
     this.setPositions();
   }
 
+  /**
+   * Funtion to reset the game
+   */
+  restartGame(): void{
+    Swal.fire({
+      title: 'Do you want restart the Game?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Yes',
+      denyButtonText: `Not`,
+    }).then((result) => {
+      /* isConfirmed */
+      if (result.isConfirmed) {
+        this.tops = [];
+        this.table = [];
+        this.lefts = [];
+        this.gameState = 0;
+      }
+    });
+  }
+
+  /**
+   * funtion to populate the table
+   */
   setTable(): void{
     for (let i = 1; i <= 100; i++) {
       if( i < 11) {
@@ -91,13 +152,9 @@ export class GameComponent implements OnInit {
 
   getId(id: number): void{
     if(this.shifts === 0) return;
-    this.shifts--;
-    console.log(this.table);
-    console.log(this.table[0].miss);
+    this.shiftsUsed++;
     const find = this.table.find( i => {return i.id === id});
-    //console.log({find});
     find.used = true;
-    console.log({id});
     if(this.checkHit(id-1) == 1){
       find.hit = true;
       this.message = 'ship was hit.';
@@ -107,6 +164,11 @@ export class GameComponent implements OnInit {
     }
   }
 
+  /**
+   * funtion to verify if the ship is hit
+   * @param id
+   * @returns
+   */
   checkHit(id: number): number{
     let hit: number = 0;
     this.ships.map( el => {
@@ -120,7 +182,6 @@ export class GameComponent implements OnInit {
   }
 
   checkPosition(i: number) : number{
-    let check = {ship: 0};
     const post = this.getPosition(i);
     if(post.length > 0){
       return post[0].ship.id;
@@ -133,7 +194,6 @@ export class GameComponent implements OnInit {
    * @returns
    */
   getPosition(item: number): any{
-    //console.log({item});
     let find = [];
     this.ships.map( el => {
       const post = _.filter(el.positions, (o: PositionModel) => { return o.id === item});
@@ -142,10 +202,6 @@ export class GameComponent implements OnInit {
         return;
       }
     });
-    if(find.length > 0){
-      //console.log({item},{find});
-      
-    }
     return find;
   }
 
@@ -153,21 +209,15 @@ export class GameComponent implements OnInit {
    * Funcion para crear la estructura de los barcos
    */
   setPositions(): void{
-    //this.setRandon(this.ships[0]);
     this.ships.forEach( (el) => {
+      el.positions = [];
       this.setRandon(el);
-      /*el.positions.forEach( (pos: any) => {
-        const find = this.table.find( i => {return i.id === pos});
-        find.used = true;
-      });*/
     });
     this.setTable();
   }
 
   async setRandon(ship: ShipsModel): Promise<void>{
     const origin = Math.floor((Math.random() * 10) + 1);
-    console.log({origin});
-    
     const length = ship.ship.size;
     if( origin < 6 ) {
       const offset = 11 - length;
