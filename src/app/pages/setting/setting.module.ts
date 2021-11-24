@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { SettingRoutingModule } from './setting-routing.module';
 import { SettingComponent } from './setting.component';
 import { ComponentsModule } from '../../components/components.module';
-import { RouterModule } from '@angular/router';
-
 
 @NgModule({
   declarations: [SettingComponent],
@@ -13,7 +13,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     SettingRoutingModule,
     ComponentsModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ]
 })
 export class SettingModule { }

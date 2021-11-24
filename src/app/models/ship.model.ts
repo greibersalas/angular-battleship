@@ -7,7 +7,8 @@ export interface ShipModel {
 export interface ShipsModel {
     id: number;
     ship: ShipModel;
-    positions: PositionModel[]
+    positions: PositionModel[],
+    destroyed: boolean;
 }
 
 export interface PositionModel {

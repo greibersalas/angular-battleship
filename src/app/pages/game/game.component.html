@@ -8,20 +8,20 @@
                 <div class="form-group mb-2 mt-2">
                     <label for="">Hi <b>{{this.nickName}}</b> Please select Shifts</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="easy" [(ngModel)]="this.shiftState">
-                        <label class="form-check-label" for="exampleRadios1">
+                        <input class="form-check-input" type="radio" name="radios" id="radios1" value="easy" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="radios1">
                             Easy <small>(Infinite shifts)</small>
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="midium" [(ngModel)]="this.shiftState">
-                        <label class="form-check-label" for="exampleRadios2">
+                        <input class="form-check-input" type="radio" name="radios" id="radios2" value="midium" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="radios2">
                         Midium <small>(100 shifts)</small>
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="hard" [(ngModel)]="this.shiftState">
-                        <label class="form-check-label" for="exampleRadios3">
+                        <input class="form-check-input" type="radio" name="radios" id="radios3" value="hard" [(ngModel)]="this.shiftState">
+                        <label class="form-check-label" for="radios3">
                         Hard <small>(50 shifts)</small>
                         </label>
                     </div>
@@ -40,17 +40,20 @@
     <div class="alert alert-success mt-2" role="alert" *ngIf="this.shifts === 0">
       game is <a href="javascript:" class="alert-link">finish!!!</a>
     </div>
+    <div class="row">
+      <div class="col-md-6 mt-3"><h6 class="text-black">Nick name: {{this.nickName}}</h6></div>
+      <div class="col-md-6 mt-3"><h6 class="text-black text-capitalize">Shirft: {{this.shiftState}}</h6></div>
+    </div>
     <div class="board">
       <div class="displays">
         <div class="top">
           <span *ngFor="let el of this.tops" [class]="el.class">{{el.name}}</span>
           <ul class="grid">
-            <li *ngFor="let el of this.table; index as i" [id]="el.id" [class]="el.style" (click)="this.getId(el.id)"
-              >
+            <li *ngFor="let el of this.table; index as i" [id]="el.id" [class]="el.style" (click)="this.getId(el.id)">
               <span class="hole" [ngClass]="{
                 'miss': this.table[i].miss,
                 'hit': this.table[i].hit
-              }">{{i}}</span>
+              }">{{i+1}}</span>
             </li>
           </ul>
           <span *ngFor="let el of this.lefts" [class]="el.class">{{el.name}}</span>
@@ -62,13 +65,24 @@
         <div class="layout">
           <h6 class="text-black" *ngIf="this.shifts > 0">Available Shifts: {{this.shifts-this.shiftsUsed}}</h6>
           <h6 class="text-black" *ngIf="this.shifts < 0">Available Shifts: infinite</h6>
-          <div class="alert alert-primary" role="alert" *ngIf="this.message != '' && this.shifts > 0">
+          <div class="alert alert-primary" role="alert" *ngIf="this.message != '' && this.shifts != 0">
             {{this.message}}
           </div>
           <div class="alert alert-warning" role="alert" *ngIf="this.shifts === 0">
             No more available shifts
           </div>
-          <button class="btn btn-sm btn-outline-secondary btn-block" (click)="this.restartGame()"> Restart Game</button>
+          <div class="row">
+            <div class="col-md-12">
+              <ul>
+                <li class="text-danger tachado" *ngFor="let el of messageDestroyed">{{el.name}}</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <button class="btn btn-sm btn-outline-secondary btn-block" (click)="this.restartGame()">
+                Restart Game
+              </button>
+            </div>
+          </div>
         </div>
         </div>
     </div>
