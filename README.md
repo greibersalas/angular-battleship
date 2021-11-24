@@ -1,6 +1,6 @@
 # Angular Battleship
 
-
+This is the initial phase of the battleship game made in Angular 10
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
